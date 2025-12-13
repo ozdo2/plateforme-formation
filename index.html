@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme de Formation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --bg-white: #ffffff;
+            --text-dark: #333333;
+            --card-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-end: #16213e;
+            --bg-white: #0f1419;
+            --text-dark: #e4e6eb;
+            --card-bg: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        /* Page de connexion */
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .login-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            max-width: 450px;
+            width: 90%;
+        }
+
+        [data-theme="dark"] .login-container {
+            background: rgba(15, 20, 25, 0.95);
+        }
+
+        .login-container h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-container p {
+            color: var(--text-dark);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+            background: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .code-input {
+            border-color: #444;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .error-message {
+            color: #ef4444;
+            margin-top: 20px;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Page des modules */
+        .modules-page {
+            display: none;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .modules-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .modules-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .modules-header p {
+            font-size: 20px;
+            opacity: 0.95;
+        }
+
+        .theme-toggle-modules {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            z-index: 1000;
+        }
+
+        .theme-toggle-modules:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        [data-theme="dark"] .module-card {
+            background: rgba(15, 20, 25, 0.95);
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .module-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .module-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .module-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .module-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ef4444;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+        }
+
+        .module-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        [data-theme="dark"] .module-description {
+            color: #aaa;
+        }
+
+        /* Page de module détaillée */
+        .module-detail-page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .module-detail-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        [data-theme="dark"] .module-detail-header {
+            background: rgba(15, 20, 25, 0.95);
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .module-detail-icon {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .module-detail-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .module-detail-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .module-detail-subtitle {
+            font-size: 18px;
+            color: #666;
+        }
+
+        [data-theme="dark"] .module-detail-subtitle {
+            color: #aaa;
+        }
+
+        .module-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            max-width: 1200px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        [data-theme="dark"] .module-content {
+            background: rgba(15, 20, 25, 0.95);
+        }
+
+        .module-content h2 {
+            color: var(--text-dark);
+            font-size: 32px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .module-content h3 {
+            color: var(--text-dark);
+            font-size: 26px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .module-content p {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .module-content ul, .module-content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .module-content li {
+            margin-bottom: 10px;
+        }
+
+        .module-content strong {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .content-placeholder {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        [data-theme="dark"] .content-placeholder {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .modules-header h1 {
+                font-size: 32px;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .module-detail-header {
+                padding: 40px 20px;
+            }
+
+            .module-detail-title {
+                font-size: 28px;
+            }
+
+            .module-content {
+                padding: 30px 20px;
+                font-size: 16px;
+            }
+
+            .logout-btn,
+            .theme-toggle-modules {
+                top: 15px;
+            }
+
+            .logout-btn {
+                left: 15px;
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+
+            .theme-toggle-modules {
+                right: 15px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .show {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page de Connexion -->
+    <div class="login-page" id="loginPage">
+        <div class="login-container">
+            <h1>🎓 Formation</h1>
+            <p>Entrez votre code d'accès pour continuer</p>
+            <input 
+                type="password" 
+                class="code-input" 
+                id="codeInput" 
+                placeholder="XXXXX"
+                maxlength="5"
+                autocomplete="off"
+            >
+            <button class="login-btn" onclick="checkCode()">Accéder à la Formation</button>
+            <p class="error-message" id="errorMessage">❌ Code incorrect. Veuillez réessayer.</p>
+        </div>
+    </div>
+
+    <!-- Page des Modules -->
+    <div class="modules-page" id="modulesPage">
+        <button class="logout-btn" onclick="logout()">← Déconnexion</button>
+        <button class="theme-toggle-modules" onclick="toggleTheme()" id="themeToggle">🌙</button>
+        
+        <div class="modules-header">
+            <h1>📚 Modules de Formation</h1>
+            <p>Cliquez sur un module pour commencer votre apprentissage</p>
+        </div>
+
+        <div class="modules-grid" id="modulesGrid">
+            <!-- Les 12 modules seront générés ici -->
+        </div>
+    </div>
+
+    <!-- Page Détail du Module -->
+    <div class="module-detail-page" id="moduleDetailPage">
+        <button class="logout-btn" onclick="backToModules()">← Retour aux modules</button>
+        <button class="theme-toggle-modules" onclick="toggleTheme()">🌙</button>
+        
+        <div class="module-detail-header" id="moduleDetailHeader">
+            <!-- Contenu dynamique -->
+        </div>
+
+        <div class="module-content" id="moduleContent">
+            <!-- Contenu dynamique -->
+        </div>
+    </div>
+
+    <script>
+        // Configuration des modules
+        const modules = [
+            {
+                id: 1,
+                title: "Nom du Module 1",
+                description: "Description courte du module 1",
+                icon: "📘",
+                imageUrl: "", // Vous pouvez ajouter une URL d'image ici
+                content: `
+                    <h2>Introduction au Module 1</h2>
+                    <p>Ajoutez ici le contenu de votre module (5000-10000 mots)...</p>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir<br>
+                        <strong>Instructions :</strong> Remplacez ce texte par votre contenu complet du module.
+                        Vous pouvez utiliser du HTML pour structurer votre contenu.
+                    </div>
+                    <h3>Section 1</h3>
+                    <p>Votre contenu ici...</p>
+                    <h3>Section 2</h3>
+                    <p>Votre contenu ici...</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Nom du Module 2",
+                description: "Description courte du module 2",
+                icon: "📗",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 2</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 2
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                title: "Nom du Module 3",
+                description: "Description courte du module 3",
+                icon: "📙",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 3</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 3
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                title: "Nom du Module 4",
+                description: "Description courte du module 4",
+                icon: "📕",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 4</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 4
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                title: "Nom du Module 5",
+                description: "Description courte du module 5",
+                icon: "📔",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 5</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 5
+                    </div>
+                `
+            },
+            {
+                id: 6,
+                title: "Nom du Module 6",
+                description: "Description courte du module 6",
+                icon: "📓",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 6</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 6
+                    </div>
+                `
+            },
+            {
+                id: 7,
+                title: "Nom du Module 7",
+                description: "Description courte du module 7",
+                icon: "📒",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 7</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 7
+                    </div>
+                `
+            },
+            {
+                id: 8,
+                title: "Nom du Module 8",
+                description: "Description courte du module 8",
+                icon: "📖",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 8</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 8
+                    </div>
+                `
+            },
+            {
+                id: 9,
+                title: "Nom du Module 9",
+                description: "Description courte du module 9",
+                icon: "📚",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 9</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 9
+                    </div>
+                `
+            },
+            {
+                id: 10,
+                title: "Nom du Module 10",
+                description: "Description courte du module 10",
+                icon: "📝",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 10</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 10
+                    </div>
+                `
+            },
+            {
+                id: 11,
+                title: "Nom du Module 11",
+                description: "Description courte du module 11",
+                icon: "✏️",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 11</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 11
+                    </div>
+                `
+            },
+            {
+                id: 12,
+                title: "Nom du Module 12",
+                description: "Description courte du module 12",
+                icon: "🎓",
+                imageUrl: "",
+                content: `
+                    <h2>Introduction au Module 12</h2>
+                    <div class="content-placeholder">
+                        📝 Zone de contenu à remplir pour le module 12
+                    </div>
+                `
+            }
+        ];
+
+        const ACCESS_CODE = "04582";
+
+        // Vérification du code
+        function checkCode() {
+            const input = document.getElementById('codeInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (input === ACCESS_CODE) {
+                sessionStorage.setItem('authenticated', 'true');
+                showModulesPage();
+            } else {
+                errorMessage.style.display = 'block';
+                document.getElementById('codeInput').value = '';
+                document.getElementById('codeInput').style.borderColor = '#ef4444';
+                
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                    document.getElementById('codeInput').style.borderColor = '#ddd';
+                }, 3000);
+            }
+        }
+
+        // Appuyer sur Entrée pour soumettre
+        document.getElementById('codeInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkCode();
+            }
+        });
+
+        // Afficher la page des modules
+        function showModulesPage() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('modulesPage').style.display = 'block';
+            generateModules();
+        }
+
+        // Générer les cartes de modules
+        function generateModules() {
+            const grid = document.getElementById('modulesGrid');
+            grid.innerHTML = '';
+
+            modules.forEach(module => {
+                const card = document.createElement('div');
+                card.className = 'module-card';
+                card.onclick = () => showModuleDetail(module.id);
+
+                const iconHtml = module.imageUrl 
+                    ? `<img src="${module.imageUrl}" alt="${module.title}">`
+                    : module.icon;
+
+                card.innerHTML = `
+                    <div class="module-icon">
+                        ${iconHtml}
+                        <div class="module-number">${module.id}</div>
+                    </div>
+                    <div class="module-title">${module.title}</div>
+                    <div class="module-description">${module.description}</div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Afficher les détails d'un module
+        function showModuleDetail(moduleId) {
+            const module = modules.find(m => m.id === moduleId);
+            if (!module) return;
+
+            document.getElementById('modulesPage').style.display = 'none';
+            document.getElementById('moduleDetailPage').style.display = 'block';
+
+            const iconHtml = module.imageUrl 
+                ? `<img src="${module.imageUrl}" alt="${module.title}">`
+                : module.icon;
+
+            document.getElementById('moduleDetailHeader').innerHTML = `
+                <button class="back-btn" onclick="backToModules()">← Retour aux modules</button>
+                <div class="module-detail-icon">
+                    ${iconHtml}
+                </div>
+                <div class="module-detail-title">Module ${module.id}: ${module.title}</div>
+                <div class="module-detail-subtitle">${module.description}</div>
+            `;
+
+            document.getElementById('moduleContent').innerHTML = module.content;
+
+            window.scrollTo(0, 0);
+        }
+
+        // Retour aux modules
+        function backToModules() {
+            document.getElementById('moduleDetailPage').style.display = 'none';
+            document.getElementById('modulesPage').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Déconnexion
+        function logout() {
+            sessionStorage.removeItem('authenticated');
+            document.getElementById('modulesPage').style.display = 'none';
+            document.getElementById('moduleDetailPage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('codeInput').value = '';
+        }
+
+        // Dark Mode
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeToggles = document.querySelectorAll('.theme-toggle-modules');
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                themeToggles.forEach(btn => btn.textContent = '🌙');
+                localStorage.setItem('formationTheme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeToggles.forEach(btn => btn.textContent = '☀️');
+                localStorage.setItem('formationTheme', 'dark');
+            }
+        }
+
+        // Chargement initial
+        window.addEventListener('DOMContentLoaded', () => {
+            // Charger le thème sauvegardé
+            const savedTheme = localStorage.getItem('formationTheme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.querySelectorAll('.theme-toggle-modules').forEach(btn => btn.textContent = '☀️');
+            }
+
+            // Vérifier l'authentification
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                showModulesPage();
+            }
+        });
+    </script>
+</body>
+</html>
