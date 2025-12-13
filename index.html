@@ -408,8 +408,8 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.2);
             max-width: 1200px;
             margin: 0 auto;
-            line-height: 1.8;
-            font-size: 18px;
+            line-height: 1.9;
+            font-size: 17px;
         }
 
         [data-theme="dark"] .module-content {
@@ -417,16 +417,26 @@
         }
 
         .module-content h2 {
-            color: var(--text-dark);
+            color: #667eea;
             font-size: 32px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            font-weight: 700;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 800;
+            border-left: 5px solid #667eea;
+            padding-left: 20px;
         }
 
         .module-content h3 {
             color: var(--text-dark);
             font-size: 26px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .module-content h4 {
+            color: var(--text-dark);
+            font-size: 22px;
             margin-top: 30px;
             margin-bottom: 15px;
             font-weight: 600;
@@ -435,16 +445,18 @@
         .module-content p {
             color: var(--text-dark);
             margin-bottom: 20px;
+            line-height: 1.8;
         }
 
         .module-content ul, .module-content ol {
             margin-left: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: var(--text-dark);
         }
 
         .module-content li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            line-height: 1.7;
         }
 
         .module-content strong {
@@ -452,19 +464,96 @@
             font-weight: 700;
         }
 
-        .content-placeholder {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            color: #666;
-            font-style: italic;
-            margin: 20px 0;
+        .module-content em {
+            color: #764ba2;
+            font-style: normal;
+            font-weight: 600;
         }
 
-        [data-theme="dark"] .content-placeholder {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: #aaa;
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+
+        [data-theme="dark"] .highlight-box {
+            background: linear-gradient(135deg, #667eea25 0%, #764ba225 100%);
+        }
+
+        .fire-emoji {
+            color: #ef4444;
+            font-size: 1.3em;
+        }
+
+        .check-emoji {
+            color: #10b981;
+        }
+
+        .cross-emoji {
+            color: #ef4444;
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, #10b98115 0%, #3b82f615 100%);
+            border: 2px solid #10b981;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 15px;
+        }
+
+        [data-theme="dark"] .exercise-box {
+            background: linear-gradient(135deg, #10b98125 0%, #3b82f625 100%);
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-top: 0 !important;
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #fbbf2415 0%, #f5971515 100%);
+            border: 2px dashed #fbbf24;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        .module-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .module-content table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .module-content table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .module-content table td {
+            border-bottom-color: #444;
+        }
+
+        .module-content table tr:hover {
+            background: rgba(102, 126, 234, 0.05);
         }
 
         @media (max-width: 768px) {
@@ -490,6 +579,14 @@
                 font-size: 16px;
             }
 
+            .module-content h2 {
+                font-size: 26px;
+            }
+
+            .module-content h3 {
+                font-size: 22px;
+            }
+
             .logout-btn,
             .theme-toggle-modules {
                 top: 15px;
@@ -508,14 +605,6 @@
                 font-size: 24px;
             }
         }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .show {
-            display: block !important;
-        }
     </style>
 </head>
 <body>
@@ -525,349 +614,871 @@
             <h1>🎓 Formation</h1>
             <p>Entrez votre code d'accès pour continuer</p>
             <input 
-                type="password" 
+                type="text" 
                 class="code-input" 
                 id="codeInput" 
                 placeholder="XXXXX"
                 maxlength="5"
-                autocomplete="off"
             >
-            <button class="login-btn" onclick="checkCode()">Accéder à la Formation</button>
+            <button class="login-btn" id="loginBtn">Accéder à la Formation</button>
             <p class="error-message" id="errorMessage">❌ Code incorrect. Veuillez réessayer.</p>
         </div>
     </div>
 
     <!-- Page des Modules -->
     <div class="modules-page" id="modulesPage">
-        <button class="logout-btn" onclick="logout()">← Déconnexion</button>
-        <button class="theme-toggle-modules" onclick="toggleTheme()" id="themeToggle">🌙</button>
+        <button class="logout-btn" id="logoutBtn">← Déconnexion</button>
+        <button class="theme-toggle-modules" id="themeToggle">🌙</button>
         
         <div class="modules-header">
             <h1>📚 Modules de Formation</h1>
             <p>Cliquez sur un module pour commencer votre apprentissage</p>
         </div>
 
-        <div class="modules-grid" id="modulesGrid">
-            <!-- Les 12 modules seront générés ici -->
-        </div>
+        <div class="modules-grid" id="modulesGrid"></div>
     </div>
 
     <!-- Page Détail du Module -->
     <div class="module-detail-page" id="moduleDetailPage">
-        <button class="logout-btn" onclick="backToModules()">← Retour aux modules</button>
-        <button class="theme-toggle-modules" onclick="toggleTheme()">🌙</button>
+        <button class="logout-btn" id="logoutBtn2">← Retour aux modules</button>
+        <button class="theme-toggle-modules" id="themeToggle2">🌙</button>
         
-        <div class="module-detail-header" id="moduleDetailHeader">
-            <!-- Contenu dynamique -->
-        </div>
-
-        <div class="module-content" id="moduleContent">
-            <!-- Contenu dynamique -->
-        </div>
+        <div class="module-detail-header" id="moduleDetailHeader"></div>
+        <div class="module-content" id="moduleContent"></div>
     </div>
 
     <script>
-        // Configuration des modules
-        const modules = [
-            {
-                id: 1,
-                title: "Nom du Module 1",
-                description: "Description courte du module 1",
-                icon: "📘",
-                imageUrl: "", // Vous pouvez ajouter une URL d'image ici
-                content: `
-                    <h2>Introduction au Module 1</h2>
-                    <p>Ajoutez ici le contenu de votre module (5000-10000 mots)...</p>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir<br>
-                        <strong>Instructions :</strong> Remplacez ce texte par votre contenu complet du module.
-                        Vous pouvez utiliser du HTML pour structurer votre contenu.
-                    </div>
-                    <h3>Section 1</h3>
-                    <p>Votre contenu ici...</p>
-                    <h3>Section 2</h3>
-                    <p>Votre contenu ici...</p>
-                `
-            },
-            {
-                id: 2,
-                title: "Nom du Module 2",
-                description: "Description courte du module 2",
-                icon: "📗",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 2</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 2
-                    </div>
-                `
-            },
-            {
-                id: 3,
-                title: "Nom du Module 3",
-                description: "Description courte du module 3",
-                icon: "📙",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 3</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 3
-                    </div>
-                `
-            },
-            {
-                id: 4,
-                title: "Nom du Module 4",
-                description: "Description courte du module 4",
-                icon: "📕",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 4</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 4
-                    </div>
-                `
-            },
-            {
-                id: 5,
-                title: "Nom du Module 5",
-                description: "Description courte du module 5",
-                icon: "📔",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 5</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 5
-                    </div>
-                `
-            },
-            {
-                id: 6,
-                title: "Nom du Module 6",
-                description: "Description courte du module 6",
-                icon: "📓",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 6</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 6
-                    </div>
-                `
-            },
-            {
-                id: 7,
-                title: "Nom du Module 7",
-                description: "Description courte du module 7",
-                icon: "📒",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 7</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 7
-                    </div>
-                `
-            },
-            {
-                id: 8,
-                title: "Nom du Module 8",
-                description: "Description courte du module 8",
-                icon: "📖",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 8</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 8
-                    </div>
-                `
-            },
-            {
-                id: 9,
-                title: "Nom du Module 9",
-                description: "Description courte du module 9",
-                icon: "📚",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 9</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 9
-                    </div>
-                `
-            },
-            {
-                id: 10,
-                title: "Nom du Module 10",
-                description: "Description courte du module 10",
-                icon: "📝",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 10</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 10
-                    </div>
-                `
-            },
-            {
-                id: 11,
-                title: "Nom du Module 11",
-                description: "Description courte du module 11",
-                icon: "✏️",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 11</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 11
-                    </div>
-                `
-            },
-            {
-                id: 12,
-                title: "Nom du Module 12",
-                description: "Description courte du module 12",
-                icon: "🎓",
-                imageUrl: "",
-                content: `
-                    <h2>Introduction au Module 12</h2>
-                    <div class="content-placeholder">
-                        📝 Zone de contenu à remplir pour le module 12
-                    </div>
-                `
-            }
-        ];
-
+        // CODE D'ACCÈS
         const ACCESS_CODE = "04582";
 
-        // Vérification du code
-        function checkCode() {
-            const input = document.getElementById('codeInput').value;
-            const errorMessage = document.getElementById('errorMessage');
+        // DONNÉES DES MODULES
+        const modulesData = {
+            1: {
+                title: "Les Fondations du Business Digital",
+                description: "Comprendre les différents modèles, identifier ton profil et construire les bases solides",
+                icon: "🚀",
+                content: `
+                    <h2><span class="fire-emoji">🔥</span> SECTION 1 — Comprendre les différents types de business en ligne</h2>
+                    
+                    <p>Avant de créer quoi que ce soit, tu dois comprendre l'écosystème. Un business en ligne n'est pas un "bloc". C'est un ensemble de modèles, stratégies et mécaniques. Plus tu comprends ces modèles, plus tu seras capable de choisir celui qui correspond à :</p>
+                    
+                    <ul>
+                        <li>ton <strong>temps</strong></li>
+                        <li>ton <strong>énergie</strong></li>
+                        <li>ton <strong>budget</strong></li>
+                        <li>ton <strong>niveau de compétence</strong></li>
+                        <li>ton <strong>ambition financière</strong></li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p><strong>La majorité RÉUSSIT parce qu'ils choisissent un modèle adapté à eux.</strong></p>
+                        <p><strong>La majorité ÉCHOUE parce qu'ils copient un modèle d'un autre sans comprendre comment il fonctionne.</strong></p>
+                    </div>
 
-            if (input === ACCESS_CODE) {
-                sessionStorage.setItem('authenticated', 'true');
-                showModulesPage();
+                    <h3><span class="fire-emoji">🔥</span> 1.1 — Les grandes catégories de business en ligne</h3>
+                    
+                    <p>Il existe <strong>7 grands types</strong>. Tous les autres sont juste des variantes.</p>
+
+                    <h4>1. Le business basé sur la création de contenu</h4>
+                    <p>Tu deviens une source d'information, de divertissement ou d'éducation.</p>
+                    
+                    <p><strong>Formes possibles :</strong></p>
+                    <ul>
+                        <li>chaînes YouTube</li>
+                        <li>comptes TikTok, Instagram</li>
+                        <li>newsletters</li>
+                        <li>blogs</li>
+                        <li>podcasts</li>
+                    </ul>
+                    
+                    <p><strong>Monétisation :</strong></p>
+                    <ul>
+                        <li>publicité (TikTok Creativity, AdSense…)</li>
+                        <li>sponsoring</li>
+                        <li>affiliation</li>
+                        <li>vente de formation / coaching</li>
+                    </ul>
+                    
+                    <p><strong>Avantages :</strong></p>
+                    <ul>
+                        <li><span class="check-emoji">✅</span> coût d'entrée presque zéro</li>
+                        <li><span class="check-emoji">✅</span> scalable</li>
+                        <li><span class="check-emoji">✅</span> tu construis une audience (actif le plus précieux)</li>
+                    </ul>
+                    
+                    <p><strong>Inconvénients :</strong></p>
+                    <ul>
+                        <li><span class="cross-emoji">❌</span> régularité obligatoire</li>
+                        <li><span class="cross-emoji">❌</span> peut être long avant de monétiser</li>
+                        <li><span class="cross-emoji">❌</span> forte concurrence (mais l'IA facilite énormément aujourd'hui)</li>
+                    </ul>
+                    
+                    <p><strong>Exemples de contenus IA :</strong></p>
+                    <ul>
+                        <li>scripts TikTok générés par ChatGPT</li>
+                        <li>vidéos faceless TikTok/YouTube faites avec Sora ou Runway</li>
+                        <li>posts Insta créés avec Canva + IA</li>
+                    </ul>
+
+                    <h4>2. Le business basé sur le savoir</h4>
+                    <p>Tu vends ce que tu sais.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>formations</li>
+                        <li>e-books</li>
+                        <li>coaching</li>
+                        <li>consulting</li>
+                        <li>audit de comptes (TikTok, business, branding…)</li>
+                    </ul>
+                    
+                    <p><strong>Avantages :</strong></p>
+                    <ul>
+                        <li><span class="check-emoji">✅</span> marges très élevées</li>
+                        <li><span class="check-emoji">✅</span> nécessite peu d'infrastructure</li>
+                        <li><span class="check-emoji">✅</span> l'IA permet de créer plus vite, mieux et plus propre</li>
+                    </ul>
+                    
+                    <p><strong>Inconvénients :</strong></p>
+                    <ul>
+                        <li><span class="cross-emoji">❌</span> nécessite une vraie compétence (ou une expertise construite rapidement)</li>
+                        <li><span class="cross-emoji">❌</span> nécessite d'être capable de résoudre un problème réel</li>
+                    </ul>
+
+                    <h4>3. Le business basé sur la vente de services</h4>
+                    <p>Tu fais pour les autres.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>montages vidéo</li>
+                        <li>gestion TikTok / UGC</li>
+                        <li>automatisations IA</li>
+                        <li>création de site</li>
+                        <li>rédaction, copywriting</li>
+                        <li>gestion publicitaire</li>
+                    </ul>
+                    
+                    <p><strong>Avantages :</strong></p>
+                    <ul>
+                        <li><span class="check-emoji">✅</span> entrée très simple</li>
+                        <li><span class="check-emoji">✅</span> les clients sont partout</li>
+                        <li><span class="check-emoji">✅</span> peu de concurrence "sérieuse"</li>
+                        <li><span class="check-emoji">✅</span> l'IA te rend 3× plus productif</li>
+                    </ul>
+                    
+                    <p><strong>Inconvénients :</strong></p>
+                    <ul>
+                        <li><span class="cross-emoji">❌</span> tu échanges du temps contre de l'argent</li>
+                        <li><span class="cross-emoji">❌</span> besoin de gérer des clients</li>
+                        <li><span class="cross-emoji">❌</span> pas vraiment passif</li>
+                    </ul>
+
+                    <h4>4. Le business basé sur la vente de produits</h4>
+                    <p>Tu vends des objets physiques.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>e-commerce classique</li>
+                        <li>dropshipping</li>
+                        <li>print-on-demand</li>
+                        <li>Amazon FBA</li>
+                    </ul>
+                    
+                    <p><strong>Avantages :</strong></p>
+                    <ul>
+                        <li><span class="check-emoji">✅</span> scalable</li>
+                        <li><span class="check-emoji">✅</span> grosses possibilités</li>
+                        <li><span class="check-emoji">✅</span> tout peut être automatisé</li>
+                    </ul>
+                    
+                    <p><strong>Inconvénients :</strong></p>
+                    <ul>
+                        <li><span class="cross-emoji">❌</span> besoin de budget</li>
+                        <li><span class="cross-emoji">❌</span> logistique</li>
+                        <li><span class="cross-emoji">❌</span> concurrence</li>
+                        <li><span class="cross-emoji">❌</span> marge parfois faible</li>
+                    </ul>
+
+                    <h4>5. Les business automatisés grâce à l'IA</h4>
+                    <p>Nouveaux modèles 2024–2025.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>bots IA pour entreprises (SaaS no-code)</li>
+                        <li>systèmes d'automatisation (Zappier/Make)</li>
+                        <li>création d'agents autonomes</li>
+                        <li>outils IA vendus sous abonnement</li>
+                    </ul>
+                    
+                    <p><strong>Avantages :</strong></p>
+                    <ul>
+                        <li><span class="check-emoji">✅</span> automatisation massive</li>
+                        <li><span class="check-emoji">✅</span> rentrées récurrentes</li>
+                        <li><span class="check-emoji">✅</span> peu de travail une fois en place</li>
+                    </ul>
+                    
+                    <p><strong>Inconvénients :</strong></p>
+                    <ul>
+                        <li><span class="cross-emoji">❌</span> demande compréhension technique</li>
+                        <li><span class="cross-emoji">❌</span> maintenance requise</li>
+                    </ul>
+
+                    <h4>6. Le business d'intermédiation</h4>
+                    <p>Tu mets en relation deux parties et tu prends une commission.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>affiliation</li>
+                        <li>marketplace</li>
+                        <li>arbitrage de freelance</li>
+                        <li>arbitrage TikTok UGC (tu trouves clients + créateurs)</li>
+                    </ul>
+                    
+                    <p><strong>Avantages :</strong></p>
+                    <ul>
+                        <li><span class="check-emoji">✅</span> aucun produit</li>
+                        <li><span class="check-emoji">✅</span> aucune compétence nécessaire au début</li>
+                        <li><span class="check-emoji">✅</span> scalable</li>
+                    </ul>
+                    
+                    <p><strong>Inconvénients :</strong></p>
+                    <ul>
+                        <li><span class="cross-emoji">❌</span> dépend de partenaires externes</li>
+                        <li><span class="cross-emoji">❌</span> faible contrôle</li>
+                    </ul>
+
+                    <h4>7. Le business basé sur l'investissement</h4>
+                    <p>Ce n'est pas pour commencer, mais il faut savoir que ça existe.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>crypto</li>
+                        <li>bourse</li>
+                        <li>immobilier fractionné</li>
+                        <li>achats/reventes de business</li>
+                        <li>acquisitions de sites web</li>
+                    </ul>
+
+                    <h3>🧠 1.2 — Le seul vrai critère pour choisir ton business</h3>
+                    
+                    <div class="highlight-box">
+                        <p><strong>➡️ Un business n'est pas "bon" ou "mauvais".</strong></p>
+                        <p><strong>➡️ Il est aligné ou pas aligné avec toi.</strong></p>
+                    </div>
+                    
+                    <p>Les 3 paramètres les plus importants :</p>
+                    <ol>
+                        <li>Ton <strong>niveau de compétence actuel</strong></li>
+                        <li>Le <strong>temps</strong> que tu peux investir</li>
+                        <li>Ta <strong>tolérance au risque</strong></li>
+                    </ol>
+                    
+                    <p>On ne choisit pas un business parce qu'il "rapporte".<br>
+                    On choisit un business parce qu'on peut <strong>y rester suffisamment longtemps pour être bon</strong>.</p>
+
+                    <div class="exercise-box">
+                        <h3>🧪 EXERCICE — Trouve le modèle adapté à toi</h3>
+                        
+                        <p><strong>Étape 1 — Choisis ce que tu veux optimiser :</strong></p>
+                        <ul>
+                            <li>🔘 Liberté géographique</li>
+                            <li>🔘 Revenus rapides</li>
+                            <li>🔘 Revenus passifs</li>
+                            <li>🔘 Scabilité</li>
+                            <li>🔘 Créativité</li>
+                            <li>🔘 Sécurité</li>
+                        </ul>
+                        
+                        <p><strong>Étape 2 — Coche les compétences que tu possèdes :</strong></p>
+                        
+                        <p><em>Compétences techniques :</em></p>
+                        <ul>
+                            <li>🔘 Montage vidéo</li>
+                            <li>🔘 Graphisme</li>
+                            <li>🔘 Programmation</li>
+                            <li>🔘 IA / automatisation</li>
+                            <li>🔘 Webdesign</li>
+                            <li>🔘 Analyse</li>
+                        </ul>
+                        
+                        <p><em>Compétences humaines :</em></p>
+                        <ul>
+                            <li>🔘 parler</li>
+                            <li>🔘 enseigner</li>
+                            <li>🔘 vendre</li>
+                            <li>🔘 négocier</li>
+                            <li>🔘 écrire</li>
+                        </ul>
+                        
+                        <p><strong>Étape 3 — Associe ton profil au business le plus probable :</strong></p>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ton profil</th>
+                                    <th>Business idéal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Créatif</td>
+                                    <td>Création de contenu, montage UGC, print-on-demand</td>
+                                </tr>
+                                <tr>
+                                    <td>Tech</td>
+                                    <td>Automatisation IA, SaaS no-code</td>
+                                </tr>
+                                <tr>
+                                    <td>Orateur</td>
+                                    <td>Coaching, formation, vidéos "talking head"</td>
+                                </tr>
+                                <tr>
+                                    <td>Introverti</td>
+                                    <td>Faceless content, arbitrage, e-commerce</td>
+                                </tr>
+                                <tr>
+                                    <td>Impatient</td>
+                                    <td>Service, freelance, montage, gestion de comptes</td>
+                                </tr>
+                                <tr>
+                                    <td>Long-term thinker</td>
+                                    <td>Brand, formation, SaaS</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2><span class="fire-emoji">🔥</span> SECTION 2 — Identifier son profil d'entrepreneur</h2>
+                    
+                    <p>Beaucoup pensent que l'entrepreneuriat se résume à "être motivé".<br>
+                    <strong>Faux.</strong></p>
+                    
+                    <p>L'entrepreneuriat est une structure psychologique composée de :</p>
+                    <ul>
+                        <li>ton rapport au risque</li>
+                        <li>ta gestion de la frustration</li>
+                        <li>ton rapport au travail</li>
+                        <li>ta vitesse d'apprentissage</li>
+                        <li>ta confiance personnelle</li>
+                        <li>ta résistance aux opinions des autres</li>
+                    </ul>
+                    
+                    <p>C'est pour ça que 90% abandonnent au bout de 30 jours.</p>
+
+                    <h3><span class="fire-emoji">🔥</span> 2.1 — Les 5 profils d'entrepreneurs</h3>
+
+                    <h4>1 — Le Créateur</h4>
+                    <p><strong>Tu aimes :</strong></p>
+                    <ul>
+                        <li>créer des choses</li>
+                        <li>imaginer</li>
+                        <li>produire</li>
+                    </ul>
+                    
+                    <p><strong>Forces :</strong></p>
+                    <ul>
+                        <li>créativité</li>
+                        <li>innovation</li>
+                        <li>vision long terme</li>
+                    </ul>
+                    
+                    <p><strong>Faiblesses :</strong></p>
+                    <ul>
+                        <li>inconstance</li>
+                        <li>difficulté à finir ce qu'on commence</li>
+                    </ul>
+                    
+                    <p><strong>Business adaptés :</strong></p>
+                    <ul>
+                        <li>YouTube / TikTok</li>
+                        <li>print-on-demand</li>
+                        <li>formation</li>
+                        <li>design / branding</li>
+                    </ul>
+
+                    <h4>2 — L'Opérateur</h4>
+                    <p><strong>Tu aimes :</strong></p>
+                    <ul>
+                        <li>optimiser</li>
+                        <li>gérer</li>
+                        <li>structurer</li>
+                    </ul>
+                    
+                    <p><strong>Forces :</strong></p>
+                    <ul>
+                        <li>rigueur</li>
+                        <li>productivité</li>
+                        <li>répétabilité</li>
+                    </ul>
+                    
+                    <p><strong>Faiblesses :</strong></p>
+                    <ul>
+                        <li>manque d'idées</li>
+                        <li>difficulté à se lancer sans cadre</li>
+                    </ul>
+                    
+                    <p><strong>Business adaptés :</strong></p>
+                    <ul>
+                        <li>automatisations IA</li>
+                        <li>gestion de comptes clients</li>
+                        <li>e-commerce</li>
+                    </ul>
+
+                    <h4>3 — Le Communicateur</h4>
+                    <p><strong>Tu aimes :</strong></p>
+                    <ul>
+                        <li>parler</li>
+                        <li>convaincre</li>
+                        <li>expliquer</li>
+                    </ul>
+                    
+                    <p><strong>Forces :</strong></p>
+                    <ul>
+                        <li>copywriting</li>
+                        <li>vente</li>
+                        <li>persuasion</li>
+                    </ul>
+                    
+                    <p><strong>Faiblesses :</strong></p>
+                    <ul>
+                        <li>peut se reposer sur son charisme</li>
+                        <li>prend parfois trop de place</li>
+                    </ul>
+                    
+                    <p><strong>Business adaptés :</strong></p>
+                    <ul>
+                        <li>formation</li>
+                        <li>coaching</li>
+                        <li>agence UGC</li>
+                        <li>vidéos talking-head</li>
+                    </ul>
+
+                    <h4>4 — L'Analyste</h4>
+                    <p><strong>Tu aimes :</strong></p>
+                    <ul>
+                        <li>comprendre</li>
+                        <li>disséquer</li>
+                        <li>clarifier</li>
+                    </ul>
+                    
+                    <p><strong>Forces :</strong></p>
+                    <ul>
+                        <li>rapidité d'apprentissage</li>
+                        <li>décision rationnelle</li>
+                        <li>structure</li>
+                    </ul>
+                    
+                    <p><strong>Faiblesses :</strong></p>
+                    <ul>
+                        <li>procrastination</li>
+                        <li>perfectionnisme</li>
+                    </ul>
+                    
+                    <p><strong>Business adaptés :</strong></p>
+                    <ul>
+                        <li>trading algorithmique</li>
+                        <li>automatisation IA</li>
+                        <li>SEO</li>
+                        <li>arbitrage</li>
+                    </ul>
+
+                    <h4>5 — Le Survivant</h4>
+                    <p>Tu veux gagner de l'argent. Point.</p>
+                    
+                    <p><strong>Forces :</strong></p>
+                    <ul>
+                        <li>résilience</li>
+                        <li>adaptabilité</li>
+                        <li>capable de fournir beaucoup d'effort</li>
+                    </ul>
+                    
+                    <p><strong>Faiblesses :</strong></p>
+                    <ul>
+                        <li>décisions courtes-termistes</li>
+                        <li>instabilité</li>
+                    </ul>
+                    
+                    <p><strong>Business adaptés :</strong></p>
+                    <ul>
+                        <li>arbitrage</li>
+                        <li>services clients</li>
+                        <li>vente d'UGC</li>
+                        <li>création de contenu intensif</li>
+                    </ul>
+
+                    <div class="exercise-box">
+                        <h3>🧪 EXERCICE — Découvre ton profil dominant</h3>
+                        <p>Réponds à ces 10 questions (note de 1 à 5).</p>
+                        <ol>
+                            <li>J'aime créer quelque chose à partir de rien</li>
+                            <li>J'aime optimiser des systèmes</li>
+                            <li>Je communique facilement avec les autres</li>
+                            <li>J'aime comprendre en profondeur</li>
+                            <li>Je veux surtout gagner de l'argent rapidement</li>
+                            <li>Je supporte bien le risque</li>
+                            <li>Je finis rarement ce que je commence</li>
+                            <li>J'apprends vite</li>
+                            <li>Je doute souvent de moi</li>
+                            <li>Je tiens le coup même quand c'est difficile</li>
+                        </ol>
+                        <p>Additionne les résultats selon les profils.<br>
+                        Le plus haut = ton profil dominant.</p>
+                    </div>
+
+                    <h2><span class="fire-emoji">🔥</span> SECTION 3 — Distinguer compétence, niche, offre et audience</h2>
+                    
+                    <p>C'est <strong>LE POINT</strong> que 99% des débutants ne comprennent pas.</p>
+                    
+                    <p>Ils pensent que :<br>
+                    <em>"Je dois trouver une niche."</em></p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Faux.</strong></p>
+                        <p>Une niche sans compétence = inutile.<br>
+                        Une compétence sans offre = pas de business.<br>
+                        Une offre sans audience = zéro client.</p>
+                    </div>
+                    
+                    <p>Tu dois comprendre la chaîne complète.</p>
+
+                    <h3>3.1 — Les 4 éléments qui font un business viable</h3>
+
+                    <h4>A. La compétence</h4>
+                    <p>C'est ce que tu sais <strong>FAIRE</strong>.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>monter des vidéos</li>
+                        <li>automatiser des tâches</li>
+                        <li>créer des sites</li>
+                        <li>faire du copywriting</li>
+                        <li>résoudre un problème précis</li>
+                        <li>maîtriser un logiciel</li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p>👉 Pas besoin d'être expert, il suffit d'être <strong>meilleur que ton client</strong>.</p>
+                        <p>👉 L'IA accélère l'apprentissage ×10.</p>
+                    </div>
+
+                    <h4>B. La niche</h4>
+                    <p>C'est juste un sous-groupe d'un marché général.</p>
+                    
+                    <p><strong>Marché → Fitness</strong><br>
+                    Niche → Perte de poids<br>
+                    Sous-niche → Perte de poids pour femmes 40+</p>
+                    
+                    <p><strong>Marché → Business</strong><br>
+                    Niche → Tiktok<br>
+                    Sous-niche → Tiktok pour restaurants</p>
+                    
+                    <p>Beaucoup se bloquent.<br>
+                    En réalité, tu n'as besoin que de LA formule :</p>
+                    
+                    <div class="formula-box">
+                        ➡️ Niche = groupe ayant un problème que tu peux résoudre.
+                    </div>
+
+                    <h4>C. L'offre</h4>
+                    <p>C'est ce que tu vends.<br>
+                    C'est la solution.</p>
+                    
+                    <p><strong>Exemples :</strong></p>
+                    <ul>
+                        <li>"je monte 20 vidéos TikTok/mois pour 200€"</li>
+                        <li>"je crée ton funnel automatisé pour 300€"</li>
+                        <li>"je forme ton équipe à l'IA en 3h pour 199€"</li>
+                        <li>"je t'aide à lancer ton business en 30 jours"</li>
+                    </ul>
+                    
+                    <p>Une offre doit toujours avoir :</p>
+                    <ul>
+                        <li>un <strong>résultat clair</strong></li>
+                        <li>une <strong>méthode</strong></li>
+                        <li>un <strong>délai</strong></li>
+                        <li>un <strong>prix</strong></li>
+                    </ul>
+
+                    <h4>D. L'audience</h4>
+                    <p>Ce sont les personnes qui voient ton travail.</p>
+                    
+                    <p><strong>Audience ≠ clients.</strong></p>
+                    
+                    <p>Audience = flux de visibilité.<br>
+                    Clients = flux d'argent.</p>
+                    
+                    <p>Tu construis d'abord un public, puis une base clients.<br>
+                    Aujourd'hui, l'IA te permet d'avoir une audience même si tu ne veux pas te montrer.</p>
+
+                    <h3>🧠 La formule du business rentable</h3>
+                    
+                    <div class="formula-box">
+                        Compétence → Niche → Offre → Audience = 💰 Argent
+                    </div>
+                    
+                    <p>Si un seul manque, tout s'effondre.</p>
+                    
+                    <p><strong>Exemple :</strong></p>
+                    <ul>
+                        <li>Tu as une audience mais pas d'offre ? → pas d'argent.</li>
+                        <li>Tu as une compétence mais pas de niche ? → pas de clients.</li>
+                        <li>Tu as une offre mais pas d'audience ? → personne ne peut acheter.</li>
+                    </ul>
+
+                    <div class="exercise-box">
+                        <h3>🧪 EXERCICE — Construis ta première équation business</h3>
+                        <ol>
+                            <li>Liste <strong>10 compétences</strong> que tu possèdes (ou que tu peux apprendre en 1 mois).</li>
+                            <li>Associe chaque compétence à <strong>3 niches possibles</strong>.</li>
+                            <li>Choisis la niche où les gens <strong>PAYENT déjà</strong>.</li>
+                            <li>Formule une offre simple :<br>
+                            <em>Je fais X pour Y en Z temps.</em></li>
+                            <li>Décris l'audience idéale en une phrase.</li>
+                        </ol>
+                    </div>
+
+                    <h2><span class="fire-emoji">🔥</span> SECTION 4 — Les erreurs classiques des débutants (et comment les éviter)</h2>
+                    
+                    <p>L'entrepreneuriat, c'est comme un jeu vidéo :<br>
+                    Tu n'as pas besoin d'être bon.<br>
+                    Tu dois juste <strong>éviter les pièges</strong>.</p>
+                    
+                    <p>Voici les 10 erreurs les plus mortelles.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 1 : Chercher l'idée parfaite</h3>
+                    <p>La plupart attendent une idée "révolutionnaire".</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>La vérité :</strong><br>
+                        ➡️ Les idées ne valent rien.<br>
+                        ➡️ L'exécution vaut tout.</p>
+                    </div>
+                    
+                    <p>Tu n'as pas besoin d'une idée géniale.<br>
+                    Tu as besoin d'un <strong>problème réel + une solution même imparfaite</strong>.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 2 : Vouloir trop apprendre avant de commencer</h3>
+                    <p>Tu n'as pas besoin de 10 formations avant d'agir.<br>
+                    Tu as besoin de <strong>faire → analyser → ajuster</strong>.</p>
+                    
+                    <p>Comprendre vient du terrain, pas des vidéos.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 3 : Avoir peur de paraître débutant</h3>
+                    <p>Tout le monde commence nul.<br>
+                    Mais le monde ne se souvient QUE des gens qui ont persévéré.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 4 : Sous-estimer son potentiel</h3>
+                    <p>Tu n'as pas besoin d'être expert.<br>
+                    Tu as besoin d'être :</p>
+                    <ul>
+                        <li><strong>fiable</strong></li>
+                        <li><strong>constant</strong></li>
+                        <li><strong>meilleur que ton client</strong></li>
+                    </ul>
+                    <p>C'est tout.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 5 : Penser que "c'est saturé"</h3>
+                    <p>Tout le monde dit ça.<br>
+                    Pourtant chaque année :</p>
+                    <ul>
+                        <li>des milliers de nouveaux créateurs émergent</li>
+                        <li>des centaines d'agences explosent</li>
+                        <li>des milliers de nouveaux business se créent</li>
+                    </ul>
+                    
+                    <p>Tu n'as pas besoin du marché.<br>
+                    Tu as besoin de <strong>1 à 5 clients pour exploser ton premier mois</strong>.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 6 : Copier au lieu de comprendre</h3>
+                    <p>S'inspirer = excellent.<br>
+                    Copier = tu ne sais pas pourquoi tu fais les choses → tu échoues.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 7 : Ne pas maîtriser les fondamentaux</h3>
+                    <p>Un business c'est 4 piliers :</p>
+                    <ol>
+                        <li><strong>offre</strong></li>
+                        <li><strong>audience</strong></li>
+                        <li><strong>conversion</strong></li>
+                        <li><strong>livraison</strong></li>
+                    </ol>
+                    <p>Sans ces 4 choses → impossible de durer.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 8 : Abandonner au mauvais moment</h3>
+                    <p>Beaucoup abandonnent après 30 jours.<br>
+                    La vérité :</p>
+                    <ul>
+                        <li><strong>1 mois</strong> = début</li>
+                        <li><strong>3 mois</strong> = progrès</li>
+                        <li><strong>6 mois</strong> = premiers résultats solides</li>
+                        <li><strong>12 mois</strong> = changement de vie</li>
+                    </ul>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 9 : Sous-estimer l'importance du mindset</h3>
+                    <p>La réussite dépend à <strong>80% du mental</strong>, pas de la technique.<br>
+                    Le meilleur business ne marche pas avec la mauvaise psychologie.</p>
+
+                    <h3><span class="cross-emoji">❌</span> Erreur 10 : Ne pas utiliser l'IA à son plein potentiel</h3>
+                    <p>Aujourd'hui, quelqu'un qui utilise l'IA :</p>
+                    <ul>
+                        <li>va <strong>5× plus vite</strong></li>
+                        <li>produit <strong>3× mieux</strong></li>
+                        <li>teste <strong>10× plus d'idées</strong></li>
+                        <li>scale <strong>100× plus facilement</strong></li>
+                    </ul>
+                    <p>Ne pas l'utiliser → désavantage massif.</p>
+
+                    <h2>🎯 CONCLUSION DU MODULE 1</h2>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Tu viens d'acquérir les fondations essentielles pour créer n'importe quel business en ligne.</strong></p>
+                        <p>Dans les prochains modules, on passera au concret : choix du business, outils, IA, création d'offre, audience, vente et automatisation.</p>
+                    </div>
+                `
+            },
+            2: { title: "Module 2", description: "Description module 2", icon: "📗", content: "Contenu module 2..." },
+            3: { title: "Module 3", description: "Description module 3", icon: "📙", content: "Contenu module 3..." },
+            4: { title: "Module 4", description: "Description module 4", icon: "📕", content: "Contenu module 4..." },
+            5: { title: "Module 5", description: "Description module 5", icon: "📔", content: "Contenu module 5..." },
+            6: { title: "Module 6", description: "Description module 6", icon: "📓", content: "Contenu module 6..." },
+            7: { title: "Module 7", description: "Description module 7", icon: "📒", content: "Contenu module 7..." },
+            8: { title: "Module 8", description: "Description module 8", icon: "📖", content: "Contenu module 8..." },
+            9: { title: "Module 9", description: "Description module 9", icon: "📚", content: "Contenu module 9..." },
+            10: { title: "Module 10", description: "Description module 10", icon: "📝", content: "Contenu module 10..." },
+            11: { title: "Module 11", description: "Description module 11", icon: "✏️", content: "Contenu module 11..." },
+            12: { title: "Module 12", description: "Description module 12", icon: "🎓", content: "Contenu module 12..." }
+        };
+
+        // ÉLÉMENTS DOM
+        const loginPage = document.getElementById('loginPage');
+        const modulesPage = document.getElementById('modulesPage');
+        const moduleDetailPage = document.getElementById('moduleDetailPage');
+        const codeInput = document.getElementById('codeInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const modulesGrid = document.getElementById('modulesGrid');
+        const moduleDetailHeader = document.getElementById('moduleDetailHeader');
+        const moduleContent = document.getElementById('moduleContent');
+
+        // VÉRIFICATION DU CODE
+        function verifierCode() {
+            const code = codeInput.value.trim();
+            
+            if (code === ACCESS_CODE) {
+                sessionStorage.setItem('auth', 'true');
+                afficherModules();
             } else {
                 errorMessage.style.display = 'block';
-                document.getElementById('codeInput').value = '';
-                document.getElementById('codeInput').style.borderColor = '#ef4444';
+                codeInput.value = '';
+                codeInput.style.borderColor = '#ef4444';
                 
                 setTimeout(() => {
                     errorMessage.style.display = 'none';
-                    document.getElementById('codeInput').style.borderColor = '#ddd';
+                    codeInput.style.borderColor = '#ddd';
                 }, 3000);
             }
         }
 
-        // Appuyer sur Entrée pour soumettre
-        document.getElementById('codeInput')?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                checkCode();
-            }
-        });
-
-        // Afficher la page des modules
-        function showModulesPage() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('modulesPage').style.display = 'block';
-            generateModules();
+        // AFFICHER LA PAGE DES MODULES
+        function afficherModules() {
+            loginPage.style.display = 'none';
+            modulesPage.style.display = 'block';
+            moduleDetailPage.style.display = 'none';
+            genererModules();
         }
 
-        // Générer les cartes de modules
-        function generateModules() {
-            const grid = document.getElementById('modulesGrid');
-            grid.innerHTML = '';
-
-            modules.forEach(module => {
+        // GÉNÉRER LES CARTES DE MODULES
+        function genererModules() {
+            modulesGrid.innerHTML = '';
+            
+            for (let i = 1; i <= 12; i++) {
+                const module = modulesData[i];
                 const card = document.createElement('div');
                 card.className = 'module-card';
-                card.onclick = () => showModuleDetail(module.id);
-
-                const iconHtml = module.imageUrl 
-                    ? `<img src="${module.imageUrl}" alt="${module.title}">`
-                    : module.icon;
-
                 card.innerHTML = `
                     <div class="module-icon">
-                        ${iconHtml}
-                        <div class="module-number">${module.id}</div>
+                        ${module.icon}
+                        <div class="module-number">${i}</div>
                     </div>
                     <div class="module-title">${module.title}</div>
                     <div class="module-description">${module.description}</div>
                 `;
-
-                grid.appendChild(card);
-            });
-        }
-
-        // Afficher les détails d'un module
-        function showModuleDetail(moduleId) {
-            const module = modules.find(m => m.id === moduleId);
-            if (!module) return;
-
-            document.getElementById('modulesPage').style.display = 'none';
-            document.getElementById('moduleDetailPage').style.display = 'block';
-
-            const iconHtml = module.imageUrl 
-                ? `<img src="${module.imageUrl}" alt="${module.title}">`
-                : module.icon;
-
-            document.getElementById('moduleDetailHeader').innerHTML = `
-                <button class="back-btn" onclick="backToModules()">← Retour aux modules</button>
-                <div class="module-detail-icon">
-                    ${iconHtml}
-                </div>
-                <div class="module-detail-title">Module ${module.id}: ${module.title}</div>
-                <div class="module-detail-subtitle">${module.description}</div>
-            `;
-
-            document.getElementById('moduleContent').innerHTML = module.content;
-
-            window.scrollTo(0, 0);
-        }
-
-        // Retour aux modules
-        function backToModules() {
-            document.getElementById('moduleDetailPage').style.display = 'none';
-            document.getElementById('modulesPage').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        // Déconnexion
-        function logout() {
-            sessionStorage.removeItem('authenticated');
-            document.getElementById('modulesPage').style.display = 'none';
-            document.getElementById('moduleDetailPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('codeInput').value = '';
-        }
-
-        // Dark Mode
-        function toggleTheme() {
-            const html = document.documentElement;
-            const themeToggles = document.querySelectorAll('.theme-toggle-modules');
-            const currentTheme = html.getAttribute('data-theme');
-            
-            if (currentTheme === 'dark') {
-                html.removeAttribute('data-theme');
-                themeToggles.forEach(btn => btn.textContent = '🌙');
-                localStorage.setItem('formationTheme', 'light');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                themeToggles.forEach(btn => btn.textContent = '☀️');
-                localStorage.setItem('formationTheme', 'dark');
+                card.addEventListener('click', () => afficherModule(i));
+                modulesGrid.appendChild(card);
             }
         }
 
-        // Chargement initial
+        // AFFICHER UN MODULE
+        function afficherModule(id) {
+            const module = modulesData[id];
+            modulesPage.style.display = 'none';
+            moduleDetailPage.style.display = 'block';
+            
+            moduleDetailHeader.innerHTML = `
+                <button class="back-btn" onclick="retourModules()">← Retour aux modules</button>
+                <div class="module-detail-icon">${module.icon}</div>
+                <div class="module-detail-title">Module ${id}: ${module.title}</div>
+                <div class="module-detail-subtitle">${module.description}</div>
+            `;
+            
+            moduleContent.innerHTML = `<p>${module.content}</p>`;
+            window.scrollTo(0, 0);
+        }
+
+        // RETOUR AUX MODULES
+        function retourModules() {
+            moduleDetailPage.style.display = 'none';
+            modulesPage.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // DÉCONNEXION
+        function deconnexion() {
+            sessionStorage.removeItem('auth');
+            modulesPage.style.display = 'none';
+            moduleDetailPage.style.display = 'none';
+            loginPage.style.display = 'flex';
+            codeInput.value = '';
+        }
+
+        // DARK MODE
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            
+            if (isDark) {
+                html.removeAttribute('data-theme');
+                document.querySelectorAll('.theme-toggle-modules').forEach(btn => btn.textContent = '🌙');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                document.querySelectorAll('.theme-toggle-modules').forEach(btn => btn.textContent = '☀️');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // EVENT LISTENERS
+        loginBtn.addEventListener('click', verifierCode);
+        codeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifierCode();
+        });
+        document.getElementById('logoutBtn').addEventListener('click', deconnexion);
+        document.getElementById('logoutBtn2').addEventListener('click', retourModules);
+        document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
+        document.getElementById('themeToggle2').addEventListener('click', toggleDarkMode);
+
+        // INITIALISATION
         window.addEventListener('DOMContentLoaded', () => {
-            // Charger le thème sauvegardé
-            const savedTheme = localStorage.getItem('formationTheme');
-            if (savedTheme === 'dark') {
+            // Charger le thème
+            if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.querySelectorAll('.theme-toggle-modules').forEach(btn => btn.textContent = '☀️');
             }
-
+            
             // Vérifier l'authentification
-            if (sessionStorage.getItem('authenticated') === 'true') {
-                showModulesPage();
+            if (sessionStorage.getItem('auth') === 'true') {
+                afficherModules();
             }
         });
     </script>
